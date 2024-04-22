@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helldivers 2 Strategems</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .highlight {
+    background-color: #00FF00; /* Green */
+  }
+  #strategemsList div {
+    transition: background-color 0.5s ease;
+  }
+  #combinationInput {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Helldivers 2 Strategems</h1>
+  <p>Enter the combination using W, A, S, D keys:</p>
+  <div id="strategemsList"></div>
+  <h2>Strategem Combinations:</h2>
+  <ul id="combinationsList">
+    <li><strong>Airstrike:</strong> wawdsa</li>
+    <li><strong>Supply Drop:</strong> aawwss</li>
+    <li><strong>Reinforce:</strong> sswad</li>
+    <!-- Add more combinations here -->
+  </ul>
+</div>
+
+<script>
+  const strategems = [
+    { name: "Airstrike", combination: "wawdsa" },
+    { name: "Supply Drop", combination: "aawwss" },
+    { name: "Reinforce", combination: "sswad" },
+    // Add more strategems here
+  ];
+
+  const combinationInput = document.getElementById("combinationInput");
+  const strategemsList = document.getElementById("strategemsList");
+  let enteredCombination = "";
+
+  document.addEventListener("keydown", event => {
+    const key = event.key.toLowerCase();
+    if (key === "w" || key === "a" || key === "s" || key === "d") {
+      enteredCombination += key;
+      checkCombination();
+    }
+  });
+
+  function checkCombination() {
+    const matchingStrategems = strategems.filter(strategem => strategem.combination === enteredCombination);
+    if (matchingStrategems.length === 0) {
+      resetInput();
+      return;
+    }
+    displayStrategems(matchingStrategems);
+  }
+
+  function resetInput() {
+    enteredCombination = "";
+    strategemsList.innerHTML = "";
+  }
+
+  function displayStrategems(strategems) {
+    strategemsList.innerHTML = "";
+    strategems.forEach(strategem => {
+      const strategemItem = document.createElement("div");
+      strategemItem.textContent = strategem.name;
+      strategemItem.addEventListener("transitionend", () => {
+        strategemItem.classList.remove("highlight");
+      });
+      strategemsList.appendChild(strategemItem);
+      setTimeout(() => {
+        strategemItem.classList.add("highlight");
+      }, 10);
+    });
+  }
+</script>
+</body>
+</html>
